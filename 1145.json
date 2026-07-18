@@ -1,0 +1,43 @@
+{
+  "bookSourceUrl": "http://www.diyibanzhu.online",
+  "bookSourceName": "第一版主网",
+  "enabled": true,
+  "enabledExplore": false,
+  "loginUrl": "",
+  "jsLib": "",
+  "searchUrl": "<js>return '/wap.php?action=search,{\"method\":\"POST\",\"body\":\"objectType=2&wd=' + encodeURIComponent(key) + '\",\"charset\":\"GBK\"}';</js>",
+  "ruleSearch": {
+    "bookList": "<js>\n// 处理反爬验证（若需要）\nif (result.match(/Just a moment/)) {\n  java.startBrowserAwait(baseUrl, '验证');\n  result = java.ajax(baseUrl);\n}\n// 提取所有 .column-2 的 HTML 片段（用正则模拟）\nconst items = [];\nconst regex = /<div[^>]*class=\"[^\"]*column-2[^\"]*\"[^>]*>([\\s\\S]*?)<\\/div>/gi;\nlet match;\nwhile ((match = regex.exec(result)) !== null) {\n  items.push(match[1]);\n}\nreturn items;\n</js>",
+    "name": "<js>const m = result.match(/<a[^>]*>([^<]*)<\\/a>/); return m ? m[1].trim() : '';</js>",
+    "author": "<js>const m = result.match(/<p[^>]*>作者：([^<]*)<\\/p>/); return m ? m[1].trim() : '';</js>",
+    "kind": "<js>const spans = result.match(/<span[^>]*>([^<]*)<\\/span>/g); return spans && spans.length ? spans[0].replace(/<[^>]+>/g,'').trim() : '';</js>",
+    "lastChapter": "<js>const spans = result.match(/<span[^>]*>([^<]*)<\\/span>/g); return spans && spans.length > 1 ? spans[1].replace(/<[^>]+>/g,'').trim() : '';</js>",
+    "wordCount": "<js>const spans = result.match(/<span[^>]*>([^<]*)<\\/span>/g); return spans && spans.length > 2 ? spans[2].replace(/<[^>]+>/g,'').trim() : '';</js>",
+    "coverUrl": "",
+    "intro": "",
+    "bookUrl": "<js>const m = result.match(/<a[^>]*href=\"([^\"]*)\"[^>]*>/); return m ? m[1] : '';</js>"
+  },
+  "ruleBookInfo": {
+    "init": "",
+    "name": "",
+    "author": "",
+    "kind": "<js>const text = result.replace(/<[^>]+>/g,''); const m = text.match(/类型：([^\\s]*)/); return m ? m[1].trim() : '';</js>",
+    "wordCount": "",
+    "lastChapter": "",
+    "coverUrl": "<js>const m = result.match(/<img[^>]*src=\"([^\"]*)\"[^>]*class=\"[^\"]*left[^\"]*\"/); return m ? m[1] : '';</js>",
+    "intro": "<js>const m = result.match(/<div[^>]*class=\"[^\"]*bd\\.2[^\"]*\"[^>]*>([\\s\\S]*?)<\\/div>/); return m ? m[1].replace(/<[^>]+>/g,'').trim() : '';</js>",
+    "tocUrl": ""
+  },
+  "ruleToc": {
+    "chapterList": "<js>\n// 提取 .chapter-list 下的 .list li 内容\nconst items = [];\nconst listRegex = /<ul[^>]*class=\"[^\"]*list[^\"]*\"[^>]*>([\\s\\S]*?)<\\/ul>/gi;\nlet listMatch;\nwhile ((listMatch = listRegex.exec(result)) !== null) {\n  const lis = listMatch[1].match(/<li[^>]*>([\\s\\S]*?)<\\/li>/gi);\n  if (lis) {\n    for (let li of lis) {\n      items.push(li);\n    }\n  }\n}\nreturn items;\n</js>",
+    "chapterName": "<js>const m = result.match(/<a[^>]*>([^<]*)<\\/a>/); return m ? m[1].trim() : '';</js>",
+    "chapterUrl": "<js>const m = result.match(/<a[^>]*href=\"([^\"]*)\"[^>]*>/); return m ? m[1] : '';</js>",
+    "isVolume": "",
+    "updateTime": "",
+    "nextTocUrl": ""  // Lordly Read 不支持 nextTocUrl，忽略
+  },
+  "ruleContent": {
+    "content": "<js>\n// 提取 #nr1 的内容，并移除广告/未完待续\nconst m = result.match(/<div[^>]*id=\"nr1\"[^>]*>([\\s\\S]*?)<\\/div>/);\nlet content = m ? m[1] : '';\n// 清理多余字符串\ncontent = content.replace(/本章未完.*|.*本章完.*/g, '');\n// 保留 <img>，去除其他 HTML 标签（后续引擎会统一处理）\nreturn content;\n</js>"
+    // 原 nextContentUrl 为分页功能，Lordly Read 不支持，需手动合并（可扩展 jsLib 实现）
+  }
+}
