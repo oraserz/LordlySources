@@ -34,10 +34,9 @@
     "chapterUrl": "<js>const m = result.match(/<a[^>]*href=\"([^\"]*)\"[^>]*>/); return m ? m[1] : '';</js>",
     "isVolume": "",
     "updateTime": "",
-    "nextTocUrl": ""  // Lordly Read 不支持 nextTocUrl，忽略
+    "nextTocUrl": ""
   },
   "ruleContent": {
     "content": "<js>\n// 提取 #nr1 的内容，并移除广告/未完待续\nconst m = result.match(/<div[^>]*id=\"nr1\"[^>]*>([\\s\\S]*?)<\\/div>/);\nlet content = m ? m[1] : '';\n// 清理多余字符串\ncontent = content.replace(/本章未完.*|.*本章完.*/g, '');\n// 保留 <img>，去除其他 HTML 标签（后续引擎会统一处理）\nreturn content;\n</js>"
-    // 原 nextContentUrl 为分页功能，Lordly Read 不支持，需手动合并（可扩展 jsLib 实现）
   }
 }
