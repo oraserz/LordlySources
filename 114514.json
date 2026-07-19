@@ -7,37 +7,37 @@
     "loginUrl": "",
     "loginUi": "",
     "jsLib": "",
-    "searchUrl": "https://www.alicesw.com/search.html?q={key}&f=_all&p={page}",
+    "searchUrl": "<js>var url='https://www.alicesw.com/search.html?q='+encodeURIComponent(key)+'&f=_all&p='+page; return url;</js>",
     "ruleSearch": {
-      "bookList": "<js>result.match(/<div class=\"list-group-item\">[\\s\\S]*?<\\/div>(?=<div class=\"list-group-item\">|$)/g) || []</js>",
-      "name": "<js>var m=result.match(/<h5>.*?<a[^>]*>\\d+\\.\\s*(.*?)<\\/a>/); return m?m[1].trim():''</js>",
-      "author": "<js>var m=result.match(/作者：<a[^>]*>([^<]*)<\\/a>/); return m?m[1].trim():''</js>",
+      "bookList": "<js>var items=result.match(/<div[^>]*class=\"[^\"]*list-group-item[^\"]*\"[^>]*>[\\s\\S]*?<\\/div>(?=<div[^>]*class=\"[^\"]*list-group-item|$)/gi); return items||[];</js>",
+      "name": "<js>var m=result.match(/<h5>.*?<a[^>]*>\\d+\\.\\s*(.*?)<\\/a>/); return m?m[1].trim():'';</js>",
+      "author": "<js>var m=result.match(/作者：<a[^>]*>([^<]*)<\\/a>/); return m?m[1].trim():'';</js>",
       "kind": "<js>var tags=[]; var re=/<a href=\"\\/search\\?q=[^\"]*&f=tag\"[^>]*>.*?#(.*?)<\\/a>/g; var match; while((match=re.exec(result))!==null){tags.push(match[1].trim());} return tags.join(',');</js>",
       "coverUrl": "",
-      "intro": "<js>var m=result.match(/<p class=\"content-txt\">(.*?)<\\/p>/s); return m?m[1].trim().replace(/<[^>]+>/g,''):''</js>",
-      "wordCount": "<js>var m=result.match(/字数：([\\d.]+万?)/); return m?m[1]:''</js>",
-      "bookUrl": "<js>var m=result.match(/<h5>.*?<a href=\"([^\"]*)\"/); return m?'https://www.alicesw.com'+m[1]:''</js>",
+      "intro": "<js>var m=result.match(/<p class=\"content-txt\">(.*?)<\\/p>/s); return m?m[1].trim().replace(/<[^>]+>/g,''):'';</js>",
+      "wordCount": "<js>var m=result.match(/字数：([\\d.]+万?)/); return m?m[1]:'';</js>",
+      "bookUrl": "<js>var m=result.match(/<h5>.*?<a href=\"([^\"]*)\"/); return m?'https://www.alicesw.com'+m[1]:'';</js>",
       "lastChapter": ""
     },
     "ruleBookInfo": {
-      "name": "<js>var m=result.match(/<h1>([^<]*)<\\/h1>/); return m?m[1].trim():''</js>",
-      "author": "<js>var m=result.match(/作者：<a[^>]*>([^<]*)<\\/a>/); return m?m[1].trim():''</js>",
+      "name": "<js>var m=result.match(/<h1>([^<]*)<\\/h1>/); return m?m[1].trim():'';</js>",
+      "author": "<js>var m=result.match(/作者：<a[^>]*>([^<]*)<\\/a>/); return m?m[1].trim():'';</js>",
       "kind": "<js>var tags=[]; var re=/<a href=\"\\/search\\.html\\?q=[^\"]*&f=tag\"[^>]*>.*?#(.*?)<\\/a>/g; var match; while((match=re.exec(result))!==null){tags.push(match[1].trim());} return tags.join(',');</js>",
-      "wordCount": "<js>var m=result.match(/字数：([\\d.]+万?)/); return m?m[1]:''</js>",
-      "lastChapter": "<js>var m=result.match(/最新：<a[^>]*>([^<]*)<\\/a>/); return m?m[1].trim():''</js>",
-      "coverUrl": "<js>var m=result.match(/<img[^>]*src=\"([^\"]*)\"[^>]*alt=\"[^\"]*\"/); return m?m[1]:''</js>",
-      "intro": "<js>var m=result.match(/<div class=\"jianjie\">(.*?)<\\/div>/s); return m?m[1].trim():''</js>",
-      "tocUrl": "<js>var m=result.match(/<a href=\"([^\"]*)\"[^>]*>查看目录<\\/a>/); return m?'https://www.alicesw.com'+m[1]:''</js>"
+      "wordCount": "<js>var m=result.match(/字数：([\\d.]+万?)/); return m?m[1]:'';</js>",
+      "lastChapter": "<js>var m=result.match(/最新：<a[^>]*>([^<]*)<\\/a>/); return m?m[1].trim():'';</js>",
+      "coverUrl": "<js>var m=result.match(/<img[^>]*src=\"([^\"]*)\"[^>]*alt=\"[^\"]*\"/); return m?m[1]:'';</js>",
+      "intro": "<js>var m=result.match(/<div class=\"jianjie\">(.*?)<\\/div>/s); return m?m[1].trim():'';</js>",
+      "tocUrl": "<js>var m=result.match(/<a href=\"([^\"]*)\"[^>]*>查看目录<\\/a>/); return m?'https://www.alicesw.com'+m[1]:'';</js>"
     },
     "ruleToc": {
-      "chapterList": "<js>result.match(/<li><a[^>]*>.*?<\\/a><\\/li>/g) || []</js>",
-      "chapterName": "<js>var m=result.match(/<a[^>]*>([^<]*)<\\/a>/); return m?m[1].trim():''</js>",
-      "chapterUrl": "<js>var m=result.match(/<a href=\"([^\"]*)\"/); return m?'https://www.alicesw.com'+m[1]:''</js>",
+      "chapterList": "<js>var items=result.match(/<li><a[^>]*>.*?<\\/a><\\/li>/g); return items||[];</js>",
+      "chapterName": "<js>var m=result.match(/<a[^>]*>([^<]*)<\\/a>/); return m?m[1].trim():'';</js>",
+      "chapterUrl": "<js>var m=result.match(/<a href=\"([^\"]*)\"/); return m?'https://www.alicesw.com'+m[1]:'';</js>",
       "isVolume": "",
       "updateTime": ""
     },
     "ruleContent": {
-      "content": "<js>var m=result.match(/<div class=\"read-content[^\"]*\"[^>]*>([\\s\\S]*?)<\\/div>/); return m?m[1].trim():''</js>"
+      "content": "<js>var m=result.match(/<div class=\"read-content[^\"]*\"[^>]*>([\\s\\S]*?)<\\/div>/); return m?m[1].trim():'';</js>"
     }
   }
 ]
