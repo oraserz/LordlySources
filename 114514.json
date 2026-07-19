@@ -1,43 +1,41 @@
-[
-  {
-    "bookSourceUrl": "https://www.alicesw.com",
-    "bookSourceName": "爱丽丝书屋",
-    "enabled": true,
-    "enabledExplore": false,
-    "loginUrl": "",
-    "loginUi": "",
-    "jsLib": "",
-    "searchUrl": "https://www.alicesw.com/search.html?q={key}&f=_all&p={page}",
-    "ruleSearch": {
-      "bookList": "<js>(function(){var items=result.match(/<div[^>]*class=\"[^\"]*list-group-item[^\"]*\"[^>]*>[\\s\\S]*?<\\/div>(?=<div[^>]*class=\"[^\"]*list-group-item|$)/gi);return items||[];})()</js>",
-      "name": "<js>(function(){var m=result.match(/<h5>.*?<a[^>]*>\\d+\\.\\s*(.*?)<\\/a>/);return m?m[1].trim():'';})()</js>",
-      "author": "<js>(function(){var m=result.match(/作者：<a[^>]*>([^<]*)<\\/a>/);return m?m[1].trim():'';})()</js>",
-      "kind": "<js>(function(){var tags=[];var re=/<a href=\"\\/search\\?q=[^\"]*&f=tag\"[^>]*>.*?#(.*?)<\\/a>/g;var match;while((match=re.exec(result))!==null){tags.push(match[1].trim());}return tags.join(',');})()</js>",
-      "coverUrl": "",
-      "intro": "<js>(function(){var m=result.match(/<p class=\"content-txt\">(.*?)<\\/p>/s);return m?m[1].trim().replace(/<[^>]+>/g,''):'';})()</js>",
-      "wordCount": "<js>(function(){var m=result.match(/字数：([\\d.]+万?)/);return m?m[1]:'';})()</js>",
-      "bookUrl": "<js>(function(){var m=result.match(/<h5>.*?<a href=\"([^\"]*)\"/);return m?'https://www.alicesw.com'+m[1]:'';})()</js>",
-      "lastChapter": ""
-    },
-    "ruleBookInfo": {
-      "name": "<js>(function(){var m=result.match(/<h1>([^<]*)<\\/h1>/);return m?m[1].trim():'';})()</js>",
-      "author": "<js>(function(){var m=result.match(/作者：<a[^>]*>([^<]*)<\\/a>/);return m?m[1].trim():'';})()</js>",
-      "kind": "<js>(function(){var tags=[];var re=/<a href=\"\\/search\\.html\\?q=[^\"]*&f=tag\"[^>]*>.*?#(.*?)<\\/a>/g;var match;while((match=re.exec(result))!==null){tags.push(match[1].trim());}return tags.join(',');})()</js>",
-      "wordCount": "<js>(function(){var m=result.match(/字数：([\\d.]+万?)/);return m?m[1]:'';})()</js>",
-      "lastChapter": "<js>(function(){var m=result.match(/最新：<a[^>]*>([^<]*)<\\/a>/);return m?m[1].trim():'';})()</js>",
-      "coverUrl": "<js>(function(){var m=result.match(/<img[^>]*src=\"([^\"]*)\"[^>]*alt=\"[^\"]*\"/);return m?m[1]:'';})()</js>",
-      "intro": "<js>(function(){var m=result.match(/<div class=\"jianjie\">(.*?)<\\/div>/s);return m?m[1].trim():'';})()</js>",
-      "tocUrl": "<js>(function(){var m=result.match(/<a href=\"([^\"]*)\"[^>]*>查看目录<\\/a>/);return m?'https://www.alicesw.com'+m[1]:'';})()</js>"
-    },
-    "ruleToc": {
-      "chapterList": "<js>(function(){var items=result.match(/<li><a[^>]*>.*?<\\/a><\\/li>/g);return items||[];})()</js>",
-      "chapterName": "<js>(function(){var m=result.match(/<a[^>]*>([^<]*)<\\/a>/);return m?m[1].trim():'';})()</js>",
-      "chapterUrl": "<js>(function(){var m=result.match(/<a href=\"([^\"]*)\"/);return m?'https://www.alicesw.com'+m[1]:'';})()</js>",
-      "isVolume": "",
-      "updateTime": ""
-    },
-    "ruleContent": {
-      "content": "<js>(function(){var m=result.match(/<div class=\"read-content[^\"]*\"[^>]*>([\\s\\S]*?)<\\/div>/);return m?m[1].trim():'';})()</js>"
-    }
+{
+  "bookSourceUrl": "https://www.alicesw.com",
+  "bookSourceName": "爱丽丝书屋",
+  "enabled": true,
+  "enabledExplore": false,
+  "loginUrl": "",
+  "loginUi": "",
+  "jsLib": "",
+  "searchUrl": "https://www.alicesw.com/search.html?q={key}&f=_all&p={page}",
+  "ruleSearch": {
+    "bookList": "<js>result.match(/<div\\s+class=\"list-group-item\">[\\s\\S]*?<\\/div>(?=<div\\s+class=\"list-group-item\">|$)/g) || []</js>",
+    "name": "<js>((result.match(/<h5>.*?<a[^>]*>\\d+\\.\\s*(.*?)<\\/a>/) || ['',''])[1] || '').trim()</js>",
+    "author": "<js>((result.match(/作者：<a[^>]*>([^<]*)<\\/a>/) || ['',''])[1] || '').trim()</js>",
+    "kind": "<js>(result.match(/<a href=\"\\/search\\?q=[^\"]*&f=tag\"[^>]*>.*?#(.*?)<\\/a>/g) || []).map(function(t){return t.replace(/.*#(.*?)<\\/a>/, '$1').trim();}).join(',')</js>",
+    "coverUrl": "",
+    "intro": "<js>((result.match(/<p class=\"content-txt\">(.*?)<\\/p>/s) || ['',''])[1] || '').replace(/<[^>]+>/g,'')</js>",
+    "wordCount": "<js>((result.match(/字数：([\\d.]+万?)/) || ['',''])[1] || '')</js>",
+    "bookUrl": "<js>'https://www.alicesw.com' + ((result.match(/<h5>.*?<a href=\"([^\"]*)\"/) || ['',''])[1] || '')</js>",
+    "lastChapter": ""
+  },
+  "ruleBookInfo": {
+    "name": "<js>((result.match(/<h1>([^<]*)<\\/h1>/) || ['',''])[1] || '').trim()</js>",
+    "author": "<js>((result.match(/作者：<a[^>]*>([^<]*)<\\/a>/) || ['',''])[1] || '').trim()</js>",
+    "kind": "<js>(result.match(/<a href=\"\\/search\\.html\\?q=[^\"]*&f=tag\"[^>]*>.*?#(.*?)<\\/a>/g) || []).map(function(t){return t.replace(/.*#(.*?)<\\/a>/, '$1').trim();}).join(',')</js>",
+    "wordCount": "<js>((result.match(/字数：([\\d.]+万?)/) || ['',''])[1] || '')</js>",
+    "lastChapter": "<js>((result.match(/最新：<a[^>]*>([^<]*)<\\/a>/) || ['',''])[1] || '').trim()</js>",
+    "coverUrl": "<js>((result.match(/<img[^>]*src=\"([^\"]*)\"[^>]*alt=\"[^\"]*\"/) || ['',''])[1] || '')</js>",
+    "intro": "<js>((result.match(/<div class=\"jianjie\">(.*?)<\\/div>/s) || ['',''])[1] || '').trim()</js>",
+    "tocUrl": "<js>'https://www.alicesw.com' + ((result.match(/<a href=\"([^\"]*)\"[^>]*>查看目录<\\/a>/) || ['',''])[1] || '')</js>"
+  },
+  "ruleToc": {
+    "chapterList": "<js>result.match(/<li><a[^>]*>.*?<\\/a><\\/li>/g) || []</js>",
+    "chapterName": "<js>((result.match(/<a[^>]*>([^<]*)<\\/a>/) || ['',''])[1] || '').trim()</js>",
+    "chapterUrl": "<js>'https://www.alicesw.com' + ((result.match(/<a href=\"([^\"]*)\"/) || ['',''])[1] || '')</js>",
+    "isVolume": "",
+    "updateTime": ""
+  },
+  "ruleContent": {
+    "content": "<js>((result.match(/<div class=\"read-content[^\"]*\"[^>]*>([\\s\\S]*?)<\\/div>/) || ['',''])[1] || '').trim()</js>"
   }
-]
+}
