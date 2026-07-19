@@ -7,7 +7,7 @@
     "loginUrl": "",
     "loginUi": "",
     "jsLib": "",
-    "searchUrl": "<js>var url='https://www.alicesw.com/search.html?q='+encodeURIComponent(key)+'&f=_all&p='+page; return url;</js>",
+    "searchUrl": "https://www.alicesw.com/search.html?q={{encodeURIComponent(key)}}&f=_all&p={{page}}",
     "ruleSearch": {
       "bookList": "<js>var items=result.match(/<div[^>]*class=\"[^\"]*list-group-item[^\"]*\"[^>]*>[\\s\\S]*?<\\/div>(?=<div[^>]*class=\"[^\"]*list-group-item|$)/gi); return items||[];</js>",
       "name": "<js>var m=result.match(/<h5>.*?<a[^>]*>\\d+\\.\\s*(.*?)<\\/a>/); return m?m[1].trim():'';</js>",
